@@ -5,10 +5,13 @@ from coop import VAE, util
 import pandas as pd
 import json
 
-model_name: str = "megagonlabs/bimeanvae-amzn"  # or "megagonlabs/bimeanvae-amzn", "megagonlabs/optimus-yelp", "megagonlabs/optimus-amzn"
+dataset = "yelp"
+
+model_name: str = "megagonlabs/bimeanvae-" + dataset  # or "megagonlabs/bimeanvae-amzn", "megagonlabs/optimus-yelp", "megagonlabs/optimus-amzn"
 vae = VAE(model_name)
 
-data = json.load(open("./data/products_8_reviews.json"))
+
+data = json.load(open("./data/" + dataset + "/products_8_reviews.json"))
 
 hypothesis = list()
 product_ids = list()
@@ -31,4 +34,4 @@ for ins in data:
     product_id = ins["product_id"]
 
 result = pd.DataFrame(data={"product_id": product_ids, "text": hypothesis, "product_category": data[0]["product_category"]})
-result.to_json("coop_summaries.json", orient="records")
+result.to_json("coop_on_" + dataset + "_summaries.json", orient="records")
