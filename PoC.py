@@ -48,4 +48,4 @@ evaluator = rouge.Rouge(metrics=["rouge-n", "rouge-l"], max_n=2, limit_length=Fa
                         stemming=True, ensure_compatibility=True)
 
 scores = pd.DataFrame(evaluator.get_scores(hypothesis, reference))
-print(scores)
+print(hypothesis)

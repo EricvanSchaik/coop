@@ -28,7 +28,7 @@ for ins in data:
         outputs: List[str] = vae.generate(zs, bad_words=util.BAD_WORDS)  # First-person pronoun blocking
         best: str = max(outputs, key=lambda x: util.input_output_overlap(inputs=reviews, output=x))
         hypothesis.append(best)
-
+        print(str(len(hypothesis)) + ' summaries generated')
         product_ids.append(ins["product_id"])
         reviews = list()
     product_id = ins["product_id"]
