@@ -1,5 +1,6 @@
 import csv
 from typing import List
+from scipy.fft import idst
 import torch
 from coop import VAE, util
 import pandas as pd
@@ -15,11 +16,14 @@ data = json.load(open("./data/" + dataset + "/products_8_reviews.json"))
 
 hypothesis = list()
 product_ids = list()
+product_categories = list()
 product_id = data[0]["product_id"]
+product_category = str()
 reviews: List[str] = list()
 for ins in data:
     if product_id == ins["product_id"]:
         reviews.append(ins["review_body"])
+        product_category = ins["product_category"]
     else:
         z_raw: torch.Tensor = vae.encode(reviews)
         idxes: List[List[int]] = util.powerset(len(reviews))
@@ -29,9 +33,14 @@ for ins in data:
         best: str = max(outputs, key=lambda x: util.input_output_overlap(inputs=reviews, output=x))
         hypothesis.append(best)
         print(str(len(hypothesis)) + ' summaries generated')
-        product_ids.append(ins["product_id"])
+        product_ids.append(product_id)
+        product_categories.append(product_category)
+        print(product_ids)
+        print(product_categories)
+        print(hypothesis)
+        print(reviews)
         reviews = list()
     product_id = ins["product_id"]
 
-result = pd.DataFrame(data={"product_id": product_ids, "text": hypothesis, "product_category": data[0]["product_category"]})
-result.to_json("coop_on_" + dataset + "_summaries.json", orient="records")
+# result = pd.DataFrame(data={"product_id": product_ids, "text": hypothesis, "product_category": product_categories})
+# result.to_json("coop_on_" + dataset + "_summaries.json", orient="records")
