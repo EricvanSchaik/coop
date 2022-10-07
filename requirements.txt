@@ -5,7 +5,7 @@ click
 py-rouge
 tqdm
 pandas
-jsonnet
+# jsonnet
 allennlp==1.2.0
 tensorboard
 requests

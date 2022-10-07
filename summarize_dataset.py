@@ -1,9 +1,6 @@
-import csv
 from typing import List
-from scipy.fft import idst
 import torch
 from coop import VAE, util
-import pandas as pd
 import json
 
 dataset = "yelp"
@@ -40,6 +37,7 @@ for ins in data:
         print(hypothesis)
         print(reviews)
         reviews = list()
+        break
     product_id = ins["product_id"]
 
 # result = pd.DataFrame(data={"product_id": product_ids, "text": hypothesis, "product_category": product_categories})
