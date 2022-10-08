@@ -2,6 +2,7 @@ from typing import List
 import torch
 from coop import VAE, util
 import json
+import pandas as pd
 
 dataset = "yelp"
 
@@ -32,13 +33,8 @@ for ins in data:
         print(str(len(hypothesis)) + ' summaries generated')
         product_ids.append(product_id)
         product_categories.append(product_category)
-        print(product_ids)
-        print(product_categories)
-        print(hypothesis)
-        print(reviews)
         reviews = list()
-        break
     product_id = ins["product_id"]
 
-# result = pd.DataFrame(data={"product_id": product_ids, "text": hypothesis, "product_category": product_categories})
-# result.to_json("coop_on_" + dataset + "_summaries.json", orient="records")
+result = pd.DataFrame(data={"product_id": product_ids, "text": hypothesis, "product_category": product_categories})
+result.to_json("coop_on_" + dataset + "_summaries.json", orient="records")
